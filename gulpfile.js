@@ -49,13 +49,13 @@ function runTask(envName = 'development', opts = {}) {
   Object.assign(options, opts);
 
   if (opts.env.isProduction) {
-    gulp.run(prodTasks);
+    gulp.start(prodTasks);
 
     return;
   }
 
-  gulp.run(defaultTasks);
+  gulp.start(defaultTasks);
 }
 
-module.exports = runTask;
+module.exports = { runTask, defaultTasks, prodTasks };
 

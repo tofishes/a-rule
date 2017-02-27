@@ -1,3 +1,3 @@
-const runTask = require('./gulpfile');
+const aRule = require('./gulpfile');
 
-module.exports = runTask;
+module.exports = aRule;
