@@ -8,12 +8,12 @@
  */
 const rev = require('gulp-rev');
 const noop = require('gulp-noop');
-// const sourcemaps = require('gulp-sourcemaps');
+const sourcemaps = require('gulp-sourcemaps');
 const base64 = require('gulp-css-base64');
 const stylus = require('gulp-stylus');
 const cleanCss = require('gulp-clean-css');  // 压缩css
 const remove = require('del');
-const normalizeCss = require('normalize.css.styl'); // import/no-extraneous-dependencies
+const normalizeCss = require('normalize.css.styl');
 const poststylus = require('poststylus');
 
 const stylusConfig = {
@@ -42,10 +42,12 @@ function css(options) {
 
   // build
   return gulp.src(src)
+    .pipe(isDev ? sourcemaps.init() : noop())
     .pipe(stylus(stylusConfig))
     .pipe(base64(base64Config))
     .pipe(isDev ? noop() : cleanCss()) // 开发环境不压缩
     .pipe(rev())
+    .pipe(isDev ? sourcemaps.write('.') : noop())
     .pipe(gulp.dest(`${cssDist}/pages`))
     .pipe(rev.manifest({
       path: 'css-map.json',

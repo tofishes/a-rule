@@ -28,6 +28,7 @@ module.exports = {
         "no-param-reassign": ["error", { "props": false }],
         "quote-props": ["error", "consistent"],
         "comma-dangle": 0,
-        "import/no-unresolved": 0
+        "import/no-unresolved": 0,
+        "import/no-extraneous-dependencies": [2, { devDependencies: true }]
     }
 };
