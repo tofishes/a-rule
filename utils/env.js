@@ -1,5 +1,12 @@
-const env = process.env.NODE_ENV || 'development';
-const isProduction = env === 'production';
-const isDev = !isProduction;
+const defaultEnv = process.env.NODE_ENV || 'development';
 
-module.exports = { name: env, isProduction, isDev };
+function getEnv(name = defaultEnv) {
+  const isProduction = name === 'production';
+  const isDev = !isProduction;
+
+  return { name, isProduction, isDev, getEnv };
+}
+
+const env = getEnv();
+
+module.exports = env;
