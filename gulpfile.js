@@ -46,7 +46,7 @@ gulp.task('production', prodTasks);
 function runTask(envName = 'development', opts = {}) {
   opts.env = env.getEnv(envName);
 
-  Object.extend(options, opts);
+  Object.assign(options, opts);
 
   if (opts.env.isProduction) {
     gulp.run(prodTasks);
