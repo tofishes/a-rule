@@ -111,6 +111,9 @@ function vue(options, callback) {
         components: path.resolve(options.homePath, options.srcDir + options.componentsDir)
       }
     },
+    externals: {
+      // 'vue': 'global.vue'
+    },
     module: {
       rules: [
         {
