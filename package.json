@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "a rule of using webpack",
   "main": "index.js",
+  "bin": {
+    "arule": "./bin/arule.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +22,7 @@
   "dependencies": {
     "buble": "^0.15.2",
     "buble-loader": "^0.4.0",
+    "commander": "^2.9.0",
     "css-loader": "^0.26.1",
     "del": "^2.2.2",
     "glob": "^7.1.1",
