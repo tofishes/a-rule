@@ -5,7 +5,9 @@ const env = require('./utils/env');
 const root = process.cwd();
 
 function loadTask(dir, callback) {
-  const files = glob.sync(`${dir}/**/*.js`);
+  const files = glob.sync(`${dir}/**/*.js`, {
+    cwd: __dirname
+  });
   files.forEach((file) => {
     const task = require(file); // eslint-disable-line
     callback(task);
