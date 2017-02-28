@@ -15,7 +15,7 @@ function loadTask(dir, callback) {
 }
 
 const options = {
-  homePath: process.cwd(),
+  homePath: root,
   srcDir: `${root}/src`,
   cssDir: '/css',
   jsDir: '/js',

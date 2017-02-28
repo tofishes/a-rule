@@ -54,12 +54,12 @@ function generateJSMap(dist) {
 function registerComponents(componentsDir) {
   const indexFile = path.resolve(componentsDir, '../components.js');
   let template = '';
+
   glob.sync(`${componentsDir}/**/*`).map((file, i) => {
     const name = path.parse(file).name;
-    const filePath = file.replace('/src', '');
 
     const register = `
-      const component${i} = require('${filePath}');
+      const component${i} = require('${file}');
       Vue.component('${name}', component${i});`;
 
     template += register;
