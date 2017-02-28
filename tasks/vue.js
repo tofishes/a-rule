@@ -112,7 +112,7 @@ function vue(options, callback) {
       }
     },
     externals: {
-      // 'vue': 'global.vue'
+      'vue': true // vue.js在common中或全局已引用，局部require vue用external的vue替代
     },
     module: {
       rules: [
