@@ -6,6 +6,7 @@
 const remove = require('del');
 const imagemin = require('gulp-imagemin');
 const cached = require('gulp-cached');
+const log = require('t-log');
 
 function image(options) {
   const gulp = this;
@@ -13,15 +14,19 @@ function image(options) {
   const src = options.srcDir + options.imageDir;
   const dist = options.distDir + options.imageDir;
 
+  const timer = log.start('image');
+
   // remove first
   remove.sync(dist);
 
   const stream = gulp.src(`${src}/**/*`)
     .pipe(cached())
     .pipe(imagemin({
-      verbose: options.env.isDev
+      verbose: options.verbose
     }))
     .pipe(gulp.dest(dist));
+
+  timer.end();
 
   return stream;
 }

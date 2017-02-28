@@ -10,6 +10,7 @@ const path = require('path');
 const glob = require('glob');
 const remove = require('del');
 const webpack = require('webpack');
+const log = require('t-log');
 
 // 根据webpack处理的chunks信息生成所需的js map对应关系
 function generateJSMap(dist) {
@@ -78,6 +79,8 @@ function vue(options, callback) {
   const dist = options.distDir + options.jsDir;
   const componentsDir = `${options.srcDir}/components`;
 
+  const timer = log.start('js');
+
   const componentsIndex = registerComponents(componentsDir);
 
   const entryMap = {
@@ -141,6 +144,7 @@ function vue(options, callback) {
   // webpack run
   webpack(config, (err) => {
     callback(err);
+    timer.end();
   });
 }
 

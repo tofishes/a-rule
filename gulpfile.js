@@ -2,6 +2,8 @@ const glob = require('glob');
 const gulp = require('gulp');
 const env = require('./utils/env');
 
+const root = process.cwd();
+
 function loadTask(dir, callback) {
   const files = glob.sync(`${dir}/**/*.js`);
   files.forEach((file) => {
@@ -12,13 +14,14 @@ function loadTask(dir, callback) {
 
 const options = {
   homePath: process.cwd(),
-  srcDir: './src',
+  srcDir: `${root}/src`,
   cssDir: '/css',
   jsDir: '/js',
   imageDir: '/image',
   staticDir: '/static',
-  distDir: './assets',
+  distDir: `${root}/assets`,
   componentsDir: '/components',
+  verbose: false, // 是否显示详细过程信息
   env
 };
 
@@ -43,19 +46,13 @@ loadTask(tasksDir, (task) => {
 gulp.task('default', defaultTasks);
 gulp.task('production', prodTasks);
 
-function runTask(envName = 'development', opts = {}) {
+function run(envName = 'development', opts = {}) {
   opts.env = env.getEnv(envName);
 
   Object.assign(options, opts);
 
-  if (opts.env.isProduction) {
-    gulp.start(prodTasks);
-
-    return;
-  }
-
-  gulp.start(defaultTasks);
+  gulp.start(opts.env.isProduction ? 'production' : 'default');
 }
 
-module.exports = { runTask, defaultTasks, prodTasks };
+module.exports = { run, defaultTasks, prodTasks };
 

@@ -15,6 +15,7 @@ const cleanCss = require('gulp-clean-css');  // 压缩css
 const remove = require('del');
 const normalizeCss = require('normalize.css.styl');
 const poststylus = require('poststylus');
+const log = require('t-log');
 
 const stylusConfig = {
   // 'include': [path.join(__dirname, './node_modules/'), __dirname],
@@ -37,11 +38,13 @@ function css(options) {
   const cssDist = options.distDir + options.cssDir;
   const src = [`${cssSrc}/pages/**/*`, `${cssSrc}/common/index.styl`];
 
+  const timer = log.start('css');
+
   // remove first
   remove.sync(cssDist);
 
   // build
-  return gulp.src(src)
+  const stream = gulp.src(src)
     .pipe(isDev ? sourcemaps.init() : noop())
     .pipe(stylus(stylusConfig))
     .pipe(base64(base64Config))
@@ -54,6 +57,10 @@ function css(options) {
       merge: true
     }))
     .pipe(gulp.dest(options.distDir)); // write manifest to build dir;
+
+  timer.end();
+
+  return stream;
 }
 
 css.production = true;
