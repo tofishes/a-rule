@@ -5,7 +5,7 @@
  */
 const remove = require('del');
 const imagemin = require('gulp-imagemin');
-const cached = require('gulp-cached');
+const newer = require('gulp-newer');
 const log = require('t-log');
 
 function image(options) {
@@ -20,7 +20,7 @@ function image(options) {
   remove.sync(dist);
 
   const stream = gulp.src(`${src}/**/*`)
-    .pipe(cached())
+    .pipe(newer(dist))
     .pipe(imagemin({
       verbose: options.verbose
     }))
