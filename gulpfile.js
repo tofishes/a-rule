@@ -45,8 +45,6 @@ loadTask(tasksDir, (task) => {
   }
 });
 
-gulp.task('default', defaultTasks);
-gulp.task('production', prodTasks);
 gulp.task('dev', defaultTasks);
 gulp.task('prod', prodTasks);
 
@@ -55,7 +53,7 @@ function run(envName = 'development', opts = {}) {
 
   Object.assign(options, opts);
 
-  gulp.start(opts.env.isProduction ? 'production' : 'default');
+  gulp.start(opts.env.isProduction ? 'prod' : 'dev');
 }
 
 module.exports = { run, defaultTasks, prodTasks };

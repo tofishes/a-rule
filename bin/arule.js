@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 const program = require('commander');
-const gulp = require('gulp');
+const arule = require('../gulpfile');
 const log = require('t-log');
-require('../gulpfile');
 
 program.on('--help', () => {
   log.warn('  Usage:');
@@ -15,7 +14,7 @@ const task = program.args[0];
 const right = ~['dev', 'prod'].indexOf(task); // eslint-disable-line
 
 if (right) {
-  gulp.start(task);
+  arule.run(task);
 } else {
   program.help();
 }
