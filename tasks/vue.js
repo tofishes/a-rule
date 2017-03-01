@@ -73,6 +73,7 @@ function registerComponents(componentsDir) {
 }
 
 function vue(options, callback) {
+  const gulp = this;
   const isDev = options.env.isDev;
 
   const src = options.srcDir + options.jsDir;
@@ -81,15 +82,17 @@ function vue(options, callback) {
 
   const timer = log.start('js');
 
+  const commonIndex = `${src}/common/index.js`;
   const componentsIndex = registerComponents(componentsDir);
+  const pagesIndex = `${src}/pages/**/*`;
 
   const entryMap = {
-    'common': `${src}/common/index.js`,
+    'common': commonIndex,
     'components': componentsIndex
   };
 
   // 读取pages下的js文件
-  glob.sync(`${src}/pages/**/*`).map((file) => {
+  glob.sync(pagesIndex).map((file) => {
     const filename = path.parse(file).name;
     entryMap[filename] = file;
 
@@ -148,6 +151,12 @@ function vue(options, callback) {
   webpack(config, (err) => {
     callback(err);
     timer.end();
+
+    if (!vue.watched && options.env.isDev) {
+      gulp.watch([commonIndex, componentsIndex, pagesIndex], [vue.name]);
+      log.debug('Start js task watching...');
+      vue.watched = true;
+    }
   });
 }
 

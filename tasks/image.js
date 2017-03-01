@@ -13,20 +13,28 @@ function image(options) {
 
   const src = options.srcDir + options.imageDir;
   const dist = options.distDir + options.imageDir;
+  const matches = `${src}/**/*`;
 
   const timer = log.start('image');
 
   // remove first
   remove.sync(dist);
 
-  const stream = gulp.src(`${src}/**/*`)
+  const stream = gulp.src(matches)
     .pipe(newer(dist))
     .pipe(imagemin({
       verbose: options.verbose
     }))
-    .pipe(gulp.dest(dist));
+    .pipe(gulp.dest(dist))
+    .on('end', () => {
+      timer.end();
 
-  timer.end();
+      if (!image.watched && options.env.isDev) {
+        gulp.watch(matches, [image.name]);
+        log.debug('Start image task watching...');
+        image.watched = true;
+      }
+    });
 
   return stream;
 }

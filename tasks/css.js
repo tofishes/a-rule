@@ -12,6 +12,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const base64 = require('gulp-css-base64');
 const stylus = require('gulp-stylus');
 const cleanCss = require('gulp-clean-css');  // 压缩css
+const newer = require('gulp-newer');
 const remove = require('del');
 const normalizeCss = require('normalize.css.styl');
 const poststylus = require('poststylus');
@@ -45,20 +46,28 @@ function css(options) {
 
   // build
   const stream = gulp.src(src)
+    .pipe(newer(cssDist))
     .pipe(isDev ? sourcemaps.init() : noop())
     .pipe(stylus(stylusConfig))
     .pipe(base64(base64Config))
     .pipe(isDev ? noop() : cleanCss()) // 开发环境不压缩
     .pipe(rev())
     .pipe(isDev ? sourcemaps.write('.') : noop())
-    .pipe(gulp.dest(`${cssDist}/pages`))
+    .pipe(gulp.dest(cssDist))
     .pipe(rev.manifest({
       path: 'css-map.json',
       merge: true
     }))
-    .pipe(gulp.dest(options.distDir)); // write manifest to build dir;
+    .pipe(gulp.dest(options.distDir))
+    .on('end', () => {
+      timer.end();
 
-  timer.end();
+      if (!css.watched && isDev) {
+        gulp.watch(src, [css.name]);
+        log.debug('Start css task watching...');
+        css.watched = true;
+      }
+    });
 
   return stream;
 }
