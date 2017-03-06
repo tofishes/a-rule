@@ -5,8 +5,10 @@
 const newer = require('gulp-newer');
 const remove = require('del');
 const log = require('t-log');
+const env = require('../utils/env');
 
-function statical(options) {
+function statical(envName, options) {
+  const isDev = env.getEnv(envName).isDev;
   const gulp = this;
 
   const src = options.srcDir + options.staticDir;
@@ -24,7 +26,7 @@ function statical(options) {
     .on('end', () => {
       timer.end();
 
-      if (!statical.watched && options.env.isDev) {
+      if (!statical.watched && isDev) {
         gulp.watch(matches, [statical.name]);
         log.debug('Start static task watching...');
         statical.watched = true;
@@ -34,7 +36,12 @@ function statical(options) {
   return stream;
 }
 
-statical.production = true;
-statical.development = true;
 
-module.exports = statical;
+function staticProd(opts) {
+  return statical.call(this, 'production', opts);
+}
+function staticDev(opts) {
+  return statical.call(this, 'development', opts);
+}
+
+module.exports = { staticProd, staticDev };

@@ -7,8 +7,10 @@ const remove = require('del');
 const imagemin = require('gulp-imagemin');
 const newer = require('gulp-newer');
 const log = require('t-log');
+const env = require('../utils/env');
 
-function image(options) {
+function image(envName, options) {
+  const isDev = env.getEnv(envName).isDev;
   const gulp = this;
 
   const src = options.srcDir + options.imageDir;
@@ -29,7 +31,7 @@ function image(options) {
     .on('end', () => {
       timer.end();
 
-      if (!image.watched && options.env.isDev) {
+      if (!image.watched && isDev) {
         gulp.watch(matches, [image.name]);
         log.debug('Start image task watching...');
         image.watched = true;
@@ -39,6 +41,11 @@ function image(options) {
   return stream;
 }
 
-image.production = true;
+function imageProd(opts) {
+  return image.call(this, 'production', opts);
+}
+function imageDev(opts) {
+  return image.call(this, 'development', opts);
+}
 
-module.exports = image;
+module.exports = { imageProd, imageDev };

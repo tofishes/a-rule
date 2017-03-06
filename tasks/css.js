@@ -17,6 +17,7 @@ const remove = require('del');
 const normalizeCss = require('normalize.css.styl');
 const poststylus = require('poststylus');
 const log = require('t-log');
+const env = require('../utils/env');
 
 const stylusConfig = {
   // 'include': [path.join(__dirname, './node_modules/'), __dirname],
@@ -31,9 +32,9 @@ const base64Config = {
   // extensionsAllowed: ['.gif', '.jpg', '.png']
 };
 
-function css(options) {
+function css(envName, options) {
   const gulp = this;
-  const isDev = options.env.isDev;
+  const isDev = env.getEnv(envName).isDev;
 
   const cssSrc = options.srcDir + options.cssDir;
   const cssDist = options.distDir + options.cssDir;
@@ -72,7 +73,11 @@ function css(options) {
   return stream;
 }
 
-css.production = true;
-css.development = true;
+function cssProd(opts) {
+  return css.call(this, 'production', opts);
+}
+function cssDev(opts) {
+  return css.call(this, 'development', opts);
+}
 
-module.exports = css;
+module.exports = { cssProd, cssDev };

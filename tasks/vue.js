@@ -11,6 +11,7 @@ const glob = require('glob');
 const remove = require('del');
 const webpack = require('webpack');
 const log = require('t-log');
+const env = require('../utils/env');
 
 // 根据webpack处理的chunks信息生成所需的js map对应关系
 function generateJSMap(dist) {
@@ -72,9 +73,10 @@ function registerComponents(componentsDir) {
   return indexFile;
 }
 
-function vue(options, callback) {
+function vue(envName, options) {
   const gulp = this;
-  const isDev = options.env.isDev;
+  const envInfo = env.getEnv(envName);
+  const isDev = envInfo.isDev;
 
   const src = options.srcDir + options.jsDir;
   const dist = options.distDir + options.jsDir;
@@ -132,7 +134,7 @@ function vue(options, callback) {
     }
   };
 
-  if (options.env.isProduction) {
+  if (envInfo.isProduction) {
     config.plugins.push(
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: isDev,
@@ -149,15 +151,25 @@ function vue(options, callback) {
 
   // webpack run
   webpack(config, (err) => {
-    callback(err);
     timer.end();
 
-    if (!vue.watched && options.env.isDev) {
+    if (!vue.watched && isDev) {
       gulp.watch([commonIndex, componentsIndex, pagesIndex], [vue.name]);
       log.debug('Start js task watching...');
       vue.watched = true;
     }
+
+    if (err) {
+      log.error(err);
+    }
   });
 }
 
-module.exports = vue;
+function vueProd(opts) {
+  return vue.call(this, 'production', opts);
+}
+function vueDev(opts) {
+  return vue.call(this, 'development', opts);
+}
+
+module.exports = { vueProd, vueDev };

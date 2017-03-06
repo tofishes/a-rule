@@ -32,28 +32,33 @@ const defaultTasks = [];
 
 const tasksDir = './tasks';
 
-loadTask(tasksDir, (task) => {
-  const deps = task.deps || [];
-  gulp.task(task.name, deps, task.bind(gulp, options));
+loadTask(tasksDir, (tasks) => {
+  Object.keys(tasks).map((taskName) => {
+    const task = tasks[taskName];
+    const deps = task.deps || [];
 
-  if (task.production !== false) {
-    prodTasks.push(task.name);
-  }
+    gulp.task(task.name, deps, task.bind(gulp, options));
 
-  if (task.development !== false) {
-    defaultTasks.push(task.name);
-  }
+    if (~task.name.toLowerCase().indexOf('prod')) { // eslint-disable-line
+      prodTasks.push(task.name);
+    }
+
+    if (~task.name.toLowerCase().indexOf('dev')) { // eslint-disable-line
+      defaultTasks.push(task.name);
+    }
+
+    return task;
+  });
 });
 
 gulp.task('dev', defaultTasks);
 gulp.task('prod', prodTasks);
 
-function run(envName = 'development', opts = {}) {
-  opts.env = env.getEnv(envName);
-
+// task 可选值为 dev | prod
+function run(task = 'dev', opts = {}) {
   Object.assign(options, opts);
 
-  gulp.start(opts.env.isProduction ? 'prod' : 'dev');
+  gulp.start(task);
 }
 
 module.exports = { run, defaultTasks, prodTasks };
