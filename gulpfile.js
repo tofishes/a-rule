@@ -1,6 +1,5 @@
 const glob = require('glob');
 const gulp = require('gulp');
-const env = require('./utils/env');
 
 const root = process.cwd();
 
@@ -23,8 +22,7 @@ const options = {
   staticDir: '/static',
   distDir: `${root}/assets`,
   componentsDir: '/components',
-  verbose: false, // 是否显示详细过程信息
-  env
+  verbose: false // 是否显示详细过程信息
 };
 
 const prodTasks = [];

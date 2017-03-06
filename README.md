@@ -45,6 +45,9 @@ $ arule prod
 
 dev和prod都会生成这些map文件，用于保持结果一致。
 
+css生成： index.md5.css 和 pages下对应的各个文件 + md5戳
+js生成： common.md5.js、componnents.md5.js 和 pages下对应的各个文件 + md5戳
+
 
 ## 结合gulp使用
 
@@ -71,15 +74,14 @@ a-rule暴露给外部的属性有：
   ```
   const options = {
     homePath: root,  // root is process.cwd()
-    srcDir: `${root}/src`,
-    cssDir: '/css',
+    srcDir: `${root}/src`,  // 源码路径，物理根路径
+    cssDir: '/css',         // 源码目录下的css目录，下同
     jsDir: '/js',
     imageDir: '/image',
     staticDir: '/static',
-    distDir: `${root}/assets`,
     componentsDir: '/components',
-    verbose: false, // 是否显示详细过程信息
-    env // env = { isDev, isProduction, 'name': 'development' }
+    distDir: `${root}/assets`,   // 编译结果目录
+    verbose: false  // 是否显示详细过程信息
   };
   ```
 
