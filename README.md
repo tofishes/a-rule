@@ -3,6 +3,8 @@
 
 js支持vuejs框架。css预处理引擎支持stylus。
 
+css内置normalize.css, 通过 `@import 'normalize';` 直接引入即可。
+
 ## 安装
 
 ```
