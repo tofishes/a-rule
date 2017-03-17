@@ -1,5 +1,7 @@
 const glob = require('glob');
 const gulp = require('gulp');
+const mkdirp = require('mkdirp');
+const log = require('t-log');
 
 const root = process.cwd();
 
@@ -51,6 +53,28 @@ loadTask(tasksDir, (tasks) => {
 
 gulp.task('dev', defaultTasks);
 gulp.task('prod', prodTasks);
+// 创建项目目录
+const initDirs = [
+  './src/components',
+  './src/css/common',
+  './src/css/pages',
+  './src/image',
+  './src/js/common',
+  './src/js/pages',
+  './src/static',
+  './views',
+  './routers',
+];
+gulp.task('init', () => {
+  initDirs.map((dir) => {
+    mkdirp.sync(dir);
+    log.info(`${dir} is created...`);
+
+    return dir;
+  });
+
+  log.debug('The project has inited!');
+});
 
 // task 可选值为 dev | prod
 function run(task = 'dev', opts = {}) {

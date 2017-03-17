@@ -36,11 +36,12 @@
     "gulp-sourcemaps": "^2.4.1",
     "gulp-stylint": "^4.0.0",
     "gulp-stylus": "^2.6.0",
+    "mkdirp": "^0.5.1",
+    "normalize.css.styl": "^4.1.1",
     "poststylus": "^0.2.3",
     "t-log": "^1.0.9",
     "vue-loader": "^11.1.0",
     "vue-template-compiler": "^2.1.10",
-    "normalize.css.styl": "^4.1.1",
     "webpack": "^2.2.1"
   },
   "devDependencies": {

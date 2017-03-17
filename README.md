@@ -16,8 +16,13 @@ npm install -g a-rule
 ```
 # 帮助
 $ arule --help
+
+# 初始化项目目录
+$ arule init
+
 # 运行测试编译并启动watch：
 $ arule dev
+
 # 运行生产编译：
 $ arule prod
 ```

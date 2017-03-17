@@ -5,13 +5,14 @@ const log = require('t-log');
 
 program.on('--help', () => {
   log.warn('  Usage:');
+  log.warn('  $', 'arule init', '初始化项目目录');
   log.warn('  $', 'arule dev', '测试环境编译');
   log.warn('  $', 'arule prod', '生产环境编译');
 });
 
 program.parse(process.argv);
 const task = program.args[0];
-const right = ~['dev', 'prod'].indexOf(task); // eslint-disable-line
+const right = ~['dev', 'prod', 'init'].indexOf(task); // eslint-disable-line
 
 if (right) {
   arule.run(task);
