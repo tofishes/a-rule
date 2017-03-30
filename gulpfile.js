@@ -1,3 +1,4 @@
+const path = require('path');
 const glob = require('glob');
 const gulp = require('gulp');
 const mkdirp = require('mkdirp');
@@ -65,12 +66,23 @@ const initDirs = [
   './views',
   './routers',
 ];
+const initFiles = {
+  './init/index.styl': './src/css/common',
+  './init/index.js': './src/js/common'
+};
 gulp.task('init', () => {
   initDirs.map((dir) => {
     mkdirp.sync(dir);
     log.info(`${dir} is created...`);
 
     return dir;
+  });
+
+  Object.keys(initFiles).map((srcFile) => {
+    gulp.src(path.resolve(__dirname, srcFile))
+      .pipe(gulp.dest(initFiles[srcFile]));
+
+    return srcFile;
   });
 
   log.debug('The project has inited!');
