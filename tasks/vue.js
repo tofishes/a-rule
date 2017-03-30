@@ -119,6 +119,9 @@ function vue(envName, options) {
     externals: {
       // 'vue': true // vue.js在common中或全局已引用，局部require vue用external的vue替代
     },
+    resolveLoader: {
+      modules: ['node_modules', path.join(__dirname, '../node_modules')]
+    },
     module: {
       rules: [
         {
@@ -128,7 +131,10 @@ function vue(envName, options) {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: 'buble-loader'
+          loader: 'buble-loader',
+          query: {
+            objectAssign: 'Object.assign'
+          }
         },
       ]
     }
