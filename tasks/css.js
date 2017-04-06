@@ -64,7 +64,7 @@ function css(envName, options) {
       timer.end();
 
       if (!css.watched && isDev) {
-        gulp.watch(src, [css.name]);
+        gulp.watch(src, ['cssDev']);
         log.debug('Start css task watching...');
         css.watched = true;
       }

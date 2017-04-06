@@ -32,7 +32,7 @@ function image(envName, options) {
       timer.end();
 
       if (!image.watched && isDev) {
-        gulp.watch(matches, [image.name]);
+        gulp.watch(matches, ['imageDev']);
         log.debug('Start image task watching...');
         image.watched = true;
       }
