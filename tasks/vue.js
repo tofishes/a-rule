@@ -160,7 +160,7 @@ function vue(envName, options) {
     timer.end();
 
     if (!vue.watched && isDev) {
-      gulp.watch([commonIndex, componentsIndex, pagesIndex], ['vueDev']);
+      gulp.watch([`${src}/common/**/*`, `${componentsDir}/**/*`, pagesIndex], ['vueDev']);
       log.debug('Start js task watching...');
       vue.watched = true;
     }

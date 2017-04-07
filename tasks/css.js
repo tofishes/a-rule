@@ -64,7 +64,7 @@ function css(envName, options) {
       timer.end();
 
       if (!css.watched && isDev) {
-        gulp.watch(src, ['cssDev']);
+        gulp.watch(src.concat([`${cssSrc}/common/**/*`]), ['cssDev']);
         log.debug('Start css task watching...');
         css.watched = true;
       }
