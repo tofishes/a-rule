@@ -6,6 +6,7 @@
 const remove = require('del');
 const imagemin = require('gulp-imagemin');
 const newer = require('gulp-newer');
+const noop = require('gulp-noop');
 const log = require('t-log');
 const env = require('../utils/env');
 
@@ -24,7 +25,7 @@ function image(envName, options) {
 
   const stream = gulp.src(matches)
     .pipe(newer(dist))
-    .pipe(imagemin({
+    .pipe(isDev ? noop() : imagemin({
       verbose: options.verbose
     }))
     .pipe(gulp.dest(dist))
