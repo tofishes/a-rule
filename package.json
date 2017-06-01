@@ -39,7 +39,7 @@
     "mkdirp": "^0.5.1",
     "normalize.css.styl": "^4.1.1",
     "poststylus": "^0.2.3",
-    "t-log": "^1.0.9",
+    "t-log": "^1.1.0",
     "vue-loader": "^11.3.4",
     "vue-template-compiler": "^2.2.6",
     "webpack": "^2.4.1"
