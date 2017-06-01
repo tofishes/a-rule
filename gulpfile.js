@@ -53,9 +53,11 @@ loadTask(tasksDir, (tasks) => {
 });
 
 gulp.task('dev', defaultTasks, () => {
-  log.success('build is finished...all watching is started....');
+  log.success('building has done...all watching has started.');
 });
-gulp.task('prod', prodTasks);
+gulp.task('prod', prodTasks, () => {
+  log.success('building has done.');
+});
 // 创建项目目录
 const initDirs = [
   './src/components',
