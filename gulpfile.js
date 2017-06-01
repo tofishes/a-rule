@@ -52,7 +52,9 @@ loadTask(tasksDir, (tasks) => {
   });
 });
 
-gulp.task('dev', defaultTasks);
+gulp.task('dev', defaultTasks, () => {
+  log.success('build is finished...all watching is started....');
+});
 gulp.task('prod', prodTasks);
 // 创建项目目录
 const initDirs = [

@@ -73,7 +73,7 @@ function registerComponents(componentsDir) {
   return indexFile;
 }
 
-function vue(envName, options) {
+function vue(envName, options, callback) {
   const gulp = this;
   const envInfo = env.getEnv(envName);
   const isDev = envInfo.isDev;
@@ -168,14 +168,16 @@ function vue(envName, options) {
     if (err) {
       log.error(err);
     }
+
+    callback(err);
   });
 }
 
-function vueProd(opts) {
-  return vue.call(this, 'production', opts);
+function vueProd(opts, callback) {
+  return vue.call(this, 'production', opts, callback);
 }
-function vueDev(opts) {
-  return vue.call(this, 'development', opts);
+function vueDev(opts, callback) {
+  return vue.call(this, 'development', opts, callback);
 }
 
 module.exports = { vueProd, vueDev };
