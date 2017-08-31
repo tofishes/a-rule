@@ -130,7 +130,7 @@ function vue(envName, options, callback) {
         },
         {
           test: /\.js$/,
-          exclude: /node_modules/,
+          exclude: /node_modules\/(?!@)/, // @开头的私人npm包不做排除
           loader: 'buble-loader',
           query: {
             objectAssign: 'Object.assign'
