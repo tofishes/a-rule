@@ -68,7 +68,10 @@ function registerComponents(componentsDir) {
     return file;
   });
 
-  fs.writeFile(indexFile, template);
+  fs.writeFile(indexFile, template, (err) => {
+    if (err) throw err;
+    console.log('The file has been saved!');
+  });
 
   return indexFile;
 }
