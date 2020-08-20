@@ -111,6 +111,9 @@ function vue(envName, options, callback) {
       filename: isDev ? '[name].js' : '[name].[chunkhash:8].js',
       path: dist
     },
+    optimization: {
+      minimize: envInfo.isProduction
+    },
     plugins: [
       generateJSMap(options.distDir)
     ],
@@ -143,18 +146,6 @@ function vue(envName, options, callback) {
     }
   };
 
-  if (envInfo.isProduction) {
-    config.plugins.push(
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: isDev,
-        compress: {
-          warnings: isDev,
-          drop_console: !isDev,
-        }
-      })
-    );
-  }
-
   // remove first
   remove.sync(dist);
 
@@ -163,7 +154,7 @@ function vue(envName, options, callback) {
     timer.end();
 
     if (!vue.watched && isDev) {
-      gulp.watch([`${src}/common/**/*`, `${componentsDir}/**/*`, pagesIndex], ['vueDev']);
+      gulp.watch([`${src}/common/**/*`, `${componentsDir}/**/*`, pagesIndex], () => vueDev(options, callback));
       log.debug('Start js task watching...');
       vue.watched = true;
     }

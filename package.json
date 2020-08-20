@@ -4,7 +4,7 @@
   "description": "a rule of using webpack",
   "main": "index.js",
   "bin": {
-    "arule": "./bin/arule.js"
+    "arule": "./bin/arule.sh"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,36 +20,37 @@
   "author": "tofishes",
   "license": "MIT",
   "dependencies": {
-    "buble": "^0.15.2",
-    "buble-loader": "^0.4.1",
-    "commander": "^2.9.0",
-    "css-loader": "^0.26.4",
-    "del": "^2.2.2",
-    "glob": "^7.1.1",
-    "gulp": "^3.9.1",
-    "gulp-clean-css": "^3.0.4",
+    "autoprefixer": "^9.8.6",
+    "buble": "^0.20.0",
+    "buble-loader": "^0.5.1",
+    "commander": "^6.0.0",
+    "css-loader": "^4.2.1",
+    "del": "^5.1.0",
+    "glob": "^7.1.6",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
     "gulp-css-base64": "^1.3.4",
-    "gulp-imagemin": "^3.2.0",
+    "gulp-imagemin": "^7.1.0",
     "gulp-newer": "^1.3.0",
-    "gulp-noop": "^1.0.0",
-    "gulp-rev": "^7.1.2",
+    "gulp-noop": "^1.0.1",
+    "gulp-rev": "^9.0.0",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-stylint": "^4.0.0",
     "gulp-stylus": "^2.6.0",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "normalize.css.styl": "^4.1.1",
-    "poststylus": "^0.2.3",
+    "poststylus": "^1.0.0",
     "t-log": "^1.1.0",
-    "vue-loader": "^11.3.4",
-    "vue-template-compiler": "^2.2.6",
-    "webpack": "^2.4.1"
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.44.1"
   },
   "devDependencies": {
-    "eslint": "^3.16.0",
-    "eslint-config-airbnb": "^14.1.0",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.6",
     "vue": "^2.6.10"
   }
 }

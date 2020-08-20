@@ -3,6 +3,7 @@ const glob = require('glob');
 const gulp = require('gulp');
 const mkdirp = require('mkdirp');
 const log = require('t-log');
+const { exec } = require('child_process');
 
 const root = process.cwd();
 
@@ -38,7 +39,9 @@ loadTask(tasksDir, (tasks) => {
     const task = tasks[taskName];
     const deps = task.deps || [];
 
-    gulp.task(task.name, deps, task.bind(gulp, options));
+    deps.push(task.bind(gulp, options))
+
+    gulp.task(task.name, gulp.series.apply(gulp, deps));
 
     if (~task.name.toLowerCase().indexOf('prod')) { // eslint-disable-line
       prodTasks.push(task.name);
@@ -52,12 +55,17 @@ loadTask(tasksDir, (tasks) => {
   });
 });
 
-gulp.task('dev', defaultTasks, () => {
+defaultTasks.push(cb => {
   log.success('building has done...all watching has started.');
-});
-gulp.task('prod', prodTasks, () => {
+  cb();
+})
+prodTasks.push(cb => {
   log.success('building has done.');
-});
+  cb();
+})
+
+gulp.task('dev', gulp.parallel.apply(gulp, defaultTasks));
+gulp.task('prod', gulp.parallel.apply(gulp, prodTasks));
 // 创建项目目录
 const initDirs = [
   './src/components',
@@ -93,10 +101,17 @@ gulp.task('init', () => {
 });
 
 // task 可选值为 dev | prod
+// deprecated
 function run(task = 'dev', opts = {}) {
   Object.assign(options, opts);
 
-  gulp.start(task);
+  exec(`gulp ${task}`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+  })
 }
 
 module.exports = { run, defaultTasks, prodTasks };

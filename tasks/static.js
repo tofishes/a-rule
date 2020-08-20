@@ -27,7 +27,7 @@ function statical(envName, options) {
       timer.end();
 
       if (!statical.watched && isDev) {
-        gulp.watch(matches, ['staticDev']);
+        gulp.watch(matches, () => staticDev(options));
         log.debug('Start static task watching...');
         statical.watched = true;
       }
